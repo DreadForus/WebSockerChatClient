@@ -32,4 +32,8 @@ export class SocketService {
             this.socket.subscribe(route, (payload: any) => observer.next(JSON.parse(payload.body)));
         });
     }
+
+    public unsubscribe(route: string){
+        this.socket.subscribe(route)
+    }
 }

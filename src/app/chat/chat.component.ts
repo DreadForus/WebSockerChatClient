@@ -87,6 +87,9 @@ export class ChatComponent implements OnInit, AfterViewInit {
             console.log(user);
 
             this.user = user;
+
+
+            this.socketService.unsubscribe('/user/message/authorization');
         });
     });
   }
@@ -147,11 +150,10 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   public authorizeUser(userName: string){
       console.log("authorizeUser: " + userName);
-      this.initIoConnection().then(() => {
-          this.socketService.send('/app/authorization.action', this.user);
 
+      const userToSend = this.user;
+      userToSend.name = userName;
 
-
-      });
+      this.initIoConnection().then(() => this.socketService.send('/app/authorization.action', userToSend));
   }
 }

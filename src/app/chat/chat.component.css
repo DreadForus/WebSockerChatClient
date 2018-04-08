@@ -14,7 +14,7 @@
 
 .chat-input {
     padding-top: 20px;
-    width: 80%; 
+    width: 80%;
 }
 
 .chat-list {
@@ -27,10 +27,12 @@
 }
 
 .chat-list-item {
-    margin-top: 2px;
-    margin-bottom: 2px;
+    /*margin-top: 2px;*/
+    /*margin-bottom: 2px;*/
     border-radius: 5px;
     background-color: #E8EAF6;
+    width: 75%;
+    margin: 10px auto;
 }
 
 .main-card {
@@ -38,12 +40,19 @@
 }
 
 .chat-footer-container {
-    position:fixed;
-    bottom:25px;
-    left:25px;
-    right:25px;
+    position: fixed;
+    bottom: 30px;
+    left: 245px;
+    right: 25px;
+    width: 80%;
+    margin: 10px auto;
 }
 
 .chat-notification {
     text-align: center;
+}
+
+.center{
+    width: 75%;
+    margin: 10px auto;
 }
