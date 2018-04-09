@@ -1,0 +1,22 @@
+<mat-list class="chat-list">
+  <tcc-message *ngFor="let message of messageService.messages" [message]="message"></tcc-message>
+
+  <!--<mat-list-item *ngFor="let message of messages" [ngClass]="[(message.action === actions.CHAT && message.from.id === userService.user.id)? 'chat-list-item': '']">-->
+  <!--<img mat-list-avatar *ngIf="message.action === actions.CHAT" [src]="message.from.avatar">-->
+  <!--<h4 mat-line *ngIf="message.action === actions.CHAT">-->
+  <!--<b>{{message.from.username}}</b>-->
+  <!--</h4>-->
+  <!--<p mat-line *ngIf="message.action === actions.CHAT">-->
+  <!--<span> {{message.content}} </span>-->
+  <!--</p>-->
+  <!--<p mat-line *ngIf="message.action === action.JOINED" class="chat-notification">-->
+  <!--<span> <b style="color: green">{{message.from.username}}</b> joined to the conversation.</span>-->
+  <!--</p>-->
+  <!--<p mat-line *ngIf="message.action === action.LEFT" class="chat-notification">-->
+  <!--<span> <b style="color: red">{{message.from.username}}</b> left conversation.</span>-->
+  <!--</p>-->
+  <!--<p mat-line *ngIf="message.action === action.RENAME" class="chat-notification">-->
+  <!--<span> <b style="color: blue">{{message.from.previousName}}</b> is now <b style="color: green">{{message.from.username}}</b> </span>-->
+  <!--</p>-->
+  <!--</mat-list-item>-->
+</mat-list>

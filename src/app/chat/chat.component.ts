@@ -9,6 +9,7 @@ import { DialogUserComponent } from './dialog-user/dialog-user.component';
 import { DialogUserType } from './dialog-user/dialog-user-type';
 import {HttpClient} from '@angular/common/http';
 import {UserService} from './shared/services/user.service.service';
+import {MessageService} from './shared/services/message-service.service';
 
 const SERVER_URL = 'http://localhost:8080';
 
@@ -19,7 +20,6 @@ const SERVER_URL = 'http://localhost:8080';
 })
 export class ChatComponent implements OnInit, AfterViewInit {
   action = Action;
-  messages: Message[] = [];
   messageContent: string;
   ioConnection: any;
   dialogRef: MatDialogRef<DialogUserComponent> | null;
@@ -31,13 +31,16 @@ export class ChatComponent implements OnInit, AfterViewInit {
     }
   };
 
-  actions = Action;
-
   @ViewChild(MatList, { read: ElementRef }) matList: ElementRef;
 
   @ViewChildren(MatListItem, { read: ElementRef }) matListItems: QueryList<MatListItem>;
 
-  constructor(private socketService: SocketService, public userService: UserService, private http: HttpClient, public dialog: MatDialog) { }
+  constructor(
+      private socketService: SocketService,
+      public userService: UserService,
+      public messageService: MessageService,
+      public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     // setTimeout(() => {
@@ -69,7 +72,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
             console.log("Received from " + route);
             console.log(message);
 
-            this.messages.push(message);
+            this.messageService.messages.push(message);
         });
 
         this.socketService.subscribe('/user/message/authorization.user').subscribe((user: User) => {
