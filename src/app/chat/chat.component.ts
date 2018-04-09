@@ -2,15 +2,14 @@ import { Component, OnInit, ViewChildren, ViewChild, AfterViewInit, QueryList, E
 import { MatDialog, MatDialogRef, MatList, MatListItem } from '@angular/material';
 
 import { Action } from './shared/model/action';
-import { Event } from './shared/model/event';
 import { Message } from './shared/model/message';
 import { User } from './shared/model/user';
 import { SocketService } from './shared/services/socket.service';
 import { DialogUserComponent } from './dialog-user/dialog-user.component';
 import { DialogUserType } from './dialog-user/dialog-user-type';
 import {HttpClient} from '@angular/common/http';
+import {UserService} from './shared/services/user.service.service';
 
-const AVATAR_URL = 'https://api.adorable.io/avatars/285';
 const SERVER_URL = 'http://localhost:8080';
 
 @Component({
@@ -20,7 +19,6 @@ const SERVER_URL = 'http://localhost:8080';
 })
 export class ChatComponent implements OnInit, AfterViewInit {
   action = Action;
-  user: User = {'name': 'test'};
   messages: Message[] = [];
   messageContent: string;
   ioConnection: any;
@@ -39,20 +37,12 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   @ViewChildren(MatListItem, { read: ElementRef }) matListItems: QueryList<MatListItem>;
 
-  constructor(private socketService: SocketService, private http: HttpClient, public dialog: MatDialog) { }
+  constructor(private socketService: SocketService, public userService: UserService, private http: HttpClient, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.initModel();
-    // Using timeout due to https://github.com/angular/angular/issues/14748
     setTimeout(() => {
       this.openUserPopup(this.defaultDialogUserParams);
     }, 0);
-
-    // setTimeout(() => {
-    //   this.authorizeUser('test')
-    // }, 0);
-
-
   }
 
   ngAfterViewInit(): void {
@@ -68,10 +58,6 @@ export class ChatComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private initModel(): void {
-    this.user = { };
-  }
-
   private initIoConnection(): any {
     return this.socketService.initSocket().then(() => {
         const route = '/topic/public';
@@ -82,14 +68,14 @@ export class ChatComponent implements OnInit, AfterViewInit {
             this.messages.push(message);
         });
 
-        this.socketService.subscribe('/user/message/authorization').subscribe((user: User) => {
+        this.socketService.subscribe('/user/message/authorization.user').subscribe((user: User) => {
             console.log("authorized");
             console.log(user);
 
-            this.user = user;
+            this.userService.user = user;
 
 
-            this.socketService.unsubscribe('/user/message/authorization');
+            this.socketService.unsubscribe('/user/message/authorization.user');
         });
     });
   }
@@ -97,7 +83,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   public onClickUserInfo() {
     this.openUserPopup({
       data: {
-        username: this.user.name,
+        username: this.userService.user.username,
         title: 'Edit Details',
         dialogType: DialogUserType.EDIT
       }
@@ -114,19 +100,24 @@ export class ChatComponent implements OnInit, AfterViewInit {
       if (paramsDialog.dialogType === DialogUserType.NEW) {
         this.authorizeUser(paramsDialog.username);
       } else if (paramsDialog.dialogType === DialogUserType.EDIT) {
-          console.log(this.user);
+          console.log(this.userService.user);
 
           const userToSend = Object.assign({
               action: Action.RENAME
-          }, this.user);
+          }, this.userService.user);
 
           console.log(userToSend);
 
-          return this.http.post(SERVER_URL + "/user/edit", userToSend).subscribe(user => {
-              this.user = user;
+          this.socketService.subscribe('/user/message/edit.user').subscribe((user: User) => {
+              console.log("authorized");
+              console.log(user);
 
-              this.socketService.send('/app/chat.addUser', userToSend);
+              this.userService.user = user;
+
+              this.socketService.unsubscribe('/user/message/edit.user');
           });
+
+          this.socketService.send('/app/edit.user', userToSend)
       }
     });
   }
@@ -137,7 +128,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
     }
 
     const message: Message = {
-        from: this.user,
+        from: this.userService.user,
         action: Action.CHAT,
         content: messageToSend
     };
@@ -151,9 +142,9 @@ export class ChatComponent implements OnInit, AfterViewInit {
   public authorizeUser(userName: string){
       console.log("authorizeUser: " + userName);
 
-      const userToSend = this.user;
-      userToSend.name = userName;
+      const userToSend = this.userService.user;
+      userToSend.username = userName;
 
-      this.initIoConnection().then(() => this.socketService.send('/app/authorization.action', userToSend));
+      this.initIoConnection().then(() => this.socketService.send('/app/authorization.user', userToSend));
   }
 }

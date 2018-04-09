@@ -34,6 +34,6 @@ export class SocketService {
     }
 
     public unsubscribe(route: string){
-        this.socket.subscribe(route)
+        this.socket.unsubscribe(route)
     }
 }
