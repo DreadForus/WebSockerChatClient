@@ -40,8 +40,12 @@ export class ChatComponent implements OnInit, AfterViewInit {
   constructor(private socketService: SocketService, public userService: UserService, private http: HttpClient, public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    // setTimeout(() => {
+    //   this.openUserPopup(this.defaultDialogUserParams);
+    // }, 0);
+
     setTimeout(() => {
-      this.openUserPopup(this.defaultDialogUserParams);
+        this.authorizeUser("test")
     }, 0);
   }
 

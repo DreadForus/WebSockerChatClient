@@ -9,7 +9,8 @@ export class UserService {
     constructor() { }
 
     set user(value: User) {
-        console.log('set user: ' + value);
+        console.log('set user: ');
+        console.log(value);
         this._user = value;
     }
     get user(): User {

@@ -10,6 +10,5 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  private initModel(): void {
-  }
+  private initModel(): void { }
 }

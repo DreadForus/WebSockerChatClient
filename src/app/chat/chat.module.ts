@@ -8,6 +8,7 @@ import { ChatComponent } from './chat.component';
 import { SocketService } from './shared/services/socket.service';
 import { DialogUserComponent } from './dialog-user/dialog-user.component';
 import {UserService} from './shared/services/user.service.service';
+import { MessageComponent } from './message/message/message.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import {UserService} from './shared/services/user.service.service';
     ReactiveFormsModule,
     MaterialModule
   ],
-  declarations: [ChatComponent, DialogUserComponent],
+  declarations: [ChatComponent, DialogUserComponent, MessageComponent],
   providers: [SocketService, UserService],
   entryComponents: [DialogUserComponent]
 })
