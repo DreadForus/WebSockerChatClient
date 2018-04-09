@@ -74,7 +74,6 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
             this.userService.user = user;
 
-
             this.socketService.unsubscribe('/user/message/authorization.user');
         });
     });
