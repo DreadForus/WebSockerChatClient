@@ -56,3 +56,19 @@
     width: 75%;
     margin: 10px auto;
 }
+
+:host{
+    display: flex;
+    height: calc(100vh - 64px)
+}
+
+.users{
+    flex: 1;
+}
+
+.messages{
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+
+}
