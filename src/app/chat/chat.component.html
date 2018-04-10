@@ -1,19 +1,24 @@
 <button mat-fab (click)="onClickUserInfo()">
   <mat-icon>person</mat-icon>
 </button>
-
-<mat-card class="main-card center" style="height:600px;max-height: 600px;overflow: scroll;">
+<div class="users mat-elevation-z2">
   <tcc-message-list></tcc-message-list>
-</mat-card>
-<mat-card class="main-card center">
+</div>
+<div class="messages mat-elevation-z2">
+  <div class="main-card center" style="min-height: calc(100% - 150px);">
+    <tcc-message-list></tcc-message-list>
+  </div>
+
+  <div class="main-card center">
     <!--<mat-icon>message</mat-icon>-->
-    <mat-form-field class="chat-input">
+    <mat-form-field class="chat-input" style="height: 150px">
       <input matInput
-         #inputMessage
-         maxlength="140"
-         placeholder="Type your message"
-         [(ngModel)]="messageContent"
-         (keyup.enter)="sendMessage(messageContent)">
+             #inputMessage
+             maxlength="140"
+             placeholder="Type your message"
+             [(ngModel)]="messageContent"
+             (keyup.enter)="sendMessage(messageContent)">
       <mat-hint align="end">{{inputMessage.value.length}}/140</mat-hint>
     </mat-form-field>
-</mat-card>
+  </div>
+</div>
