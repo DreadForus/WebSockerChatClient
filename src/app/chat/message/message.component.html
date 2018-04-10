@@ -1,5 +1,4 @@
 <mat-list-item [ngClass]="[(message.action === actions.CHAT && message.from.id === userService.user.id)? 'chat-list-item': 'user_info_message']">
-  <span>{{getDateCreate()}}</span>
   <img mat-list-avatar *ngIf="message.action === actions.CHAT" [src]="message.from.avatar">
   <h4 mat-line *ngIf="message.action === actions.CHAT">
     <b>{{message.from.username}}</b>
@@ -16,4 +15,29 @@
   <p mat-line *ngIf="message.action === actions.RENAME" class="chat-notification">
     <span> <b style="color: blue">{{message.from.previousName}}</b> is now <b style="color: green">{{message.from.username}}</b> </span>
   </p>
+  <span *ngIf="message.action === actions.CHAT">
+    {{getDateCreate()}}
+  </span>
+
+  <div *ngIf="message.action === actions.CHAT">
+
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Redial</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>voicemail</mat-icon>
+        <span>Check voicemail</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+      </button>
+    </mat-menu>
+  </div>
+
 </mat-list-item>

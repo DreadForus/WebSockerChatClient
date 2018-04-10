@@ -2,20 +2,18 @@
   <mat-icon>person</mat-icon>
 </button>
 
-<div class="chat-container" >
-  <mat-card class="main-card center">
+<mat-card class="main-card center" style="height:600px;max-height: 600px;overflow: scroll;">
   <tcc-message-list></tcc-message-list>
-    <div class="chat-footer-container">
-      <mat-icon>message</mat-icon>
-      <mat-form-field class="chat-input">
-        <input matInput 
-           #inputMessage
-           maxlength="140"
-           placeholder="Type your message"
-           [(ngModel)]="messageContent"
-           (keyup.enter)="sendMessage(messageContent)">
-        <mat-hint align="end">{{inputMessage.value.length}}/140</mat-hint>
-      </mat-form-field>
-    </div>
-  </mat-card>
-</div>
+</mat-card>
+<mat-card class="main-card center">
+    <mat-icon>message</mat-icon>
+    <mat-form-field class="chat-input">
+      <input matInput
+         #inputMessage
+         maxlength="140"
+         placeholder="Type your message"
+         [(ngModel)]="messageContent"
+         (keyup.enter)="sendMessage(messageContent)">
+      <mat-hint align="end">{{inputMessage.value.length}}/140</mat-hint>
+    </mat-form-field>
+</mat-card>
