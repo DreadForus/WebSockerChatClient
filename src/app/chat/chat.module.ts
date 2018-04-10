@@ -7,10 +7,10 @@ import { MaterialModule } from '../shared/material/material.module';
 import { ChatComponent } from './chat.component';
 import { SocketService } from './shared/services/socket.service';
 import { DialogUserComponent } from './dialog-user/dialog-user.component';
-import {UserService} from './shared/services/user.service.service';
-import { MessageComponent } from './message/message/message.component';
-import { MessageListComponent } from './messageList/message-list/message-list.component';
-import {MessageService} from './shared/services/message-service.service';
+import {UserService} from './shared/services/user.service';
+import { MessageComponent } from './message/message.component';
+import { MessageListComponent } from './message-list/message-list.component';
+import {MessageService} from './shared/services/message.service';
 
 @NgModule({
   imports: [

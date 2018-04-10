@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChildren, ViewChild, AfterViewInit, QueryList, ElementRef } from '@angular/core';
-import { MatDialog, MatDialogRef, MatList, MatListItem } from '@angular/material';
+import {MatDialog, MatDialogRef, MatList, MatListItem} from '@angular/material';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 import { Action } from './shared/model/action';
 import { Message } from './shared/model/message';
@@ -7,11 +8,8 @@ import { User } from './shared/model/user';
 import { SocketService } from './shared/services/socket.service';
 import { DialogUserComponent } from './dialog-user/dialog-user.component';
 import { DialogUserType } from './dialog-user/dialog-user-type';
-import {HttpClient} from '@angular/common/http';
-import {UserService} from './shared/services/user.service.service';
-import {MessageService} from './shared/services/message-service.service';
-
-const SERVER_URL = 'http://localhost:8080';
+import {UserService} from './shared/services/user.service';
+import {MessageService} from './shared/services/message.service';
 
 @Component({
   selector: 'tcc-chat',
@@ -19,7 +17,6 @@ const SERVER_URL = 'http://localhost:8080';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, AfterViewInit {
-  action = Action;
   messageContent: string;
   ioConnection: any;
   dialogRef: MatDialogRef<DialogUserComponent> | null;

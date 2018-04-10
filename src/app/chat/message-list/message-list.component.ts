@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MessageService} from '../../shared/services/message-service.service';
+import {MessageService} from '../shared/services/message.service';
 
 @Component({
   selector: 'tcc-message-list',
