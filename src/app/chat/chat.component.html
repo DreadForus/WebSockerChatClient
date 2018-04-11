@@ -2,7 +2,7 @@
   <mat-icon>person</mat-icon>
 </button>
 <div class="users mat-elevation-z2">
-  <tcc-message-list></tcc-message-list>
+  <tcc-participant-list></tcc-participant-list>
 </div>
 <div class="messages mat-elevation-z2">
   <div class="main-card center" style="min-height: calc(100% - 150px);">
@@ -13,11 +13,11 @@
     <!--<mat-icon>message</mat-icon>-->
     <mat-form-field class="chat-input" style="height: 150px">
       <input matInput
-             #inputMessage
-             maxlength="140"
-             placeholder="Type your message"
-             [(ngModel)]="messageContent"
-             (keyup.enter)="sendMessage(messageContent)">
+         #inputMessage
+         maxlength="140"
+         placeholder="Type your message"
+         [(ngModel)]="messageContent"
+         (keyup.enter)="sendMessage(messageContent)">
       <mat-hint align="end">{{inputMessage.value.length}}/140</mat-hint>
     </mat-form-field>
   </div>

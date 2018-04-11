@@ -3,6 +3,8 @@ import { Observable } from 'rxjs/Observable';
 import { Message } from '../model/message';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import 'rxjs/add/operator/filter';
 
 const SERVER_URL = 'http://localhost:8080/ws';
 
@@ -10,10 +12,18 @@ const SERVER_URL = 'http://localhost:8080/ws';
 export class SocketService {
     private socket: Stomp.Client;
 
+    public onInit: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+    constructor(){
+        this.initSocket().then(() => {
+            this.onInit.next(true);
+        });
+    }
+
     public initSocket(): any {
         return new Promise((resolve) => {
             this.socket = Stomp.over(new SockJS(SERVER_URL));
-
+            this.socket.debug = function () {};
             this.socket.connect({}, resolve);
         })
     }

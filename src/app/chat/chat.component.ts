@@ -18,7 +18,6 @@ import {MessageService} from './shared/services/message.service';
 })
 export class ChatComponent implements OnInit, AfterViewInit {
   messageContent: string;
-  ioConnection: any;
   dialogRef: MatDialogRef<DialogUserComponent> | null;
   defaultDialogUserParams: any = {
     disableClose: true,
@@ -45,7 +44,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
     // }, 0);
 
     setTimeout(() => {
-        this.authorizeUser("test")
+        this.userService.authorizeUser("test")
     }, 0);
   }
 
@@ -60,27 +59,6 @@ export class ChatComponent implements OnInit, AfterViewInit {
       this.matList.nativeElement.scrollTop = this.matList.nativeElement.scrollHeight;
     } catch (err) {
     }
-  }
-
-  private initIoConnection(): any {
-    return this.socketService.initSocket().then(() => {
-        const route = '/topic/public';
-        this.ioConnection = this.socketService.subscribe(route).subscribe((message: Message) => {
-            console.log("Received from " + route);
-            console.log(message);
-
-            this.messageService.messages.push(message);
-        });
-
-        this.socketService.subscribe('/user/message/authorization.user').subscribe((user: User) => {
-            console.log("authorized");
-            console.log(user);
-
-            this.userService.user = user;
-
-            this.socketService.unsubscribe('/user/message/authorization.user');
-        });
-    });
   }
 
   public onClickUserInfo() {
@@ -101,26 +79,9 @@ export class ChatComponent implements OnInit, AfterViewInit {
       }
 
       if (paramsDialog.dialogType === DialogUserType.NEW) {
-        this.authorizeUser(paramsDialog.username);
+        this.userService.authorizeUser(paramsDialog.username);
       } else if (paramsDialog.dialogType === DialogUserType.EDIT) {
-          console.log(this.userService.user);
-
-          const userToSend = Object.assign({
-              action: Action.RENAME
-          }, this.userService.user);
-
-          console.log(userToSend);
-
-          this.socketService.subscribe('/user/message/edit.user').subscribe((user: User) => {
-              console.log("authorized");
-              console.log(user);
-
-              this.userService.user = user;
-
-              this.socketService.unsubscribe('/user/message/edit.user');
-          });
-
-          this.socketService.send('/app/edit.user', userToSend)
+          this.userService.rename(paramsDialog.username);
       }
     });
   }
@@ -140,14 +101,5 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
     this.socketService.send('/app/chat.sendMessage', message);
     this.messageContent = null;
-  }
-
-  public authorizeUser(userName: string){
-      console.log("authorizeUser: " + userName);
-
-      const userToSend = this.userService.user;
-      userToSend.username = userName;
-
-      this.initIoConnection().then(() => this.socketService.send('/app/authorization.user', userToSend));
   }
 }

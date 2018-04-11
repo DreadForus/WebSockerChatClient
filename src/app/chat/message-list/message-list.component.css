@@ -1,0 +1,9 @@
+:host{
+    height: 100%;
+    overflow: scroll;
+    display: flex;
+}
+
+.chat-list{
+    flex: 1;
+}
