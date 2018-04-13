@@ -3,6 +3,7 @@ import {Action} from '../shared/model/action';
 import {UserService} from '../shared/services/user.service';
 import {Message} from '../shared/model/message';
 import {MatMenuModule} from '@angular/material/menu';
+import {Utils} from '../shared/services/utils';
 
 @Component({
   selector: 'tcc-message',
@@ -21,8 +22,16 @@ export class MessageComponent implements OnInit {
   @Input() message: Message;
 
   getDateCreate() {
-      const d = new Date(this.message.dateCreate);
+      const dateCreate = this.message.dateCreate;
 
-      return  d.getHours() + ":" + d.getMinutes();
-    }
+      const d = new Date(Utils.convertISO8601toDate(dateCreate));
+
+      const dateFormat = d.getHours() + ":" + d.getMinutes();
+
+      console.log(Date.parse(this.message.dateCreate));
+      console.log(d);
+
+      return dateFormat;
+  }
+
 }
