@@ -1,4 +1,5 @@
-<mat-list-item [ngClass]="[(message.action === actions.CHAT && message.from.id === userService.user.id)? 'chat-list-item': 'user_info_message']">
+<!--<mat-list-item [ngClass]="[(message.action === actions.CHAT && message.from.id === userService.user.id)? 'chat-list-item': 'user_info_message']">-->
+<mat-list-item [ngClass]="[(message.action === actions.CHAT) ? 'chat-list-item': 'user_info_message']">
   <img mat-list-avatar *ngIf="message.action === actions.CHAT" [src]="message.from.avatar">
   <h4 mat-line *ngIf="message.action === actions.CHAT">
     <b>{{message.from.username}}</b>

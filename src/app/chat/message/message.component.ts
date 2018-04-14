@@ -22,16 +22,9 @@ export class MessageComponent implements OnInit {
   @Input() message: Message;
 
   getDateCreate() {
-      const dateCreate = this.message.dateCreate;
+      const d = new Date(Utils.convertISO8601toDate( this.message.dateCreate));
 
-      const d = new Date(Utils.convertISO8601toDate(dateCreate));
-
-      const dateFormat = d.getHours() + ":" + d.getMinutes();
-
-      console.log(Date.parse(this.message.dateCreate));
-      console.log(d);
-
-      return dateFormat;
+      return d.getHours() + ":" + d.getMinutes();
   }
 
 }

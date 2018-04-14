@@ -39,13 +39,13 @@ export class ChatComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    // setTimeout(() => {
-    //   this.openUserPopup(this.defaultDialogUserParams);
-    // }, 0);
-
     setTimeout(() => {
-        this.userService.authorizeUser("test")
+      this.openUserPopup(this.defaultDialogUserParams);
     }, 0);
+
+    // setTimeout(() => {
+    //     this.userService.authorizeUser("test")
+    // }, 0);
   }
 
   ngAfterViewInit(): void {
