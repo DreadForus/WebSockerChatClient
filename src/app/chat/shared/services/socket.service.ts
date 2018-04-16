@@ -5,6 +5,7 @@ import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/filter';
+import {HttpClient} from '@angular/common/http';
 
 const SERVER_URL = 'http://localhost:8080/ws';
 
@@ -15,9 +16,9 @@ export class SocketService {
     public onInit: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     constructor(){
-        this.initSocket().then(() => {
-            this.onInit.next(true);
-        });
+        // this.initSocket().then(() => {
+        //     this.onInit.next(true);
+        // });
     }
 
     public initSocket(): any {

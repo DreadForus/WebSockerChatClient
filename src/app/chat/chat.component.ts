@@ -10,6 +10,7 @@ import { DialogUserComponent } from './dialog-user/dialog-user.component';
 import { DialogUserType } from './dialog-user/dialog-user-type';
 import {UserService} from './shared/services/user.service';
 import {MessageService} from './shared/services/message.service';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'tcc-chat',
@@ -35,17 +36,27 @@ export class ChatComponent implements OnInit, AfterViewInit {
       private socketService: SocketService,
       public userService: UserService,
       public messageService: MessageService,
-      public dialog: MatDialog
-  ) { }
+      public dialog: MatDialog,
+      private httpClient: HttpClient
+  ) {
+
+      this.httpClient.post("http://localhost:8080/log_out", {"username": "test", "password": "test"}).subscribe((response)=> {
+          console.log(response)
+
+          this.httpClient.post("http://localhost:8080/log_in", {"username": "test", "password": "test"}).subscribe((response)=> {
+              console.log(response)
+          })
+      })
+  }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.openUserPopup(this.defaultDialogUserParams);
-    }, 0);
-
     // setTimeout(() => {
-    //     this.userService.authorizeUser("test")
+    //   this.openUserPopup(this.defaultDialogUserParams);
     // }, 0);
+
+    setTimeout(() => {
+        this.userService.authorizeUser("test")
+    }, 0);
   }
 
   ngAfterViewInit(): void {
